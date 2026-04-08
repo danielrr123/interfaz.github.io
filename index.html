@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Las Delicias - Reservas y Pedidos</title>
+    <!-- Font Awesome Icons (v6 free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-container">
+    <!-- Header con logo esquina superior izquierda -->
+    <div class="header">
+        <div class="logo-area">
+            <div class="logo-circle">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Las Delicias</h1>
+                <p>Sabor que enamora · Reservas & Pedidos</p>
+            </div>
+        </div>
+        <div class="header-actions" id="headerActions">
+            <!-- Aquí se renderiza dinámicamente según sesión -->
+        </div>
+    </div>
+
+    <!-- Pestañas principales -->
+    <div class="nav-tabs" id="navTabs">
+        <button class="tab-btn" data-tab="menu"><i class="fas fa-book-open"></i> Menú</button>
+        <button class="tab-btn" data-tab="bebidas"><i class="fas fa-wine-bottle"></i> Bebidas</button>
+        <button class="tab-btn" data-tab="promociones"><i class="fas fa-tag"></i> Promociones</button>
+        <button class="tab-btn" data-tab="carrito"><i class="fas fa-shopping-cart"></i> Carrito (<span id="cartCount">0</span>)</button>
+        <button class="tab-btn" data-tab="datos"><i class="fas fa-user-circle"></i> Datos Personales</button>
+        <button class="tab-btn" data-tab="empresa"><i class="fas fa-building"></i> Empresa</button>
+        <button class="tab-btn" data-tab="servicio"><i class="fas fa-headset"></i> Servicio al Cliente</button>
+        <button class="tab-btn" data-tab="politicas"><i class="fas fa-shield-alt"></i> Políticas</button>
+    </div>
+
+    <div class="main-content">
+        <!-- PANEL MENÚ -->
+        <div id="menuPane" class="tab-pane active-pane">
+            <h2><i class="fas fa-hamburger"></i> Nuestro Menú (Precios USD)</h2>
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+        <!-- PANEL BEBIDAS -->
+        <div id="bebidasPane" class="tab-pane">
+            <h2><i class="fas fa-cocktail"></i> Bebidas refrescantes</h2>
+            <div class="bebidas-grid" id="bebidasGrid"></div>
+        </div>
+        <!-- PANEL PROMOCIONES -->
+        <div id="promocionesPane" class="tab-pane">
+            <h2><i class="fas fa-percent"></i> Promociones especiales</h2>
+            <div class="promos-grid" id="promosGrid"></div>
+        </div>
+        <!-- PANEL CARRITO + PROCESO PAGO + CAMBIAR CUENTA (opción desde aquí) -->
+        <div id="carritoPane" class="tab-pane">
+            <div class="cart-summary">
+                <h3><i class="fas fa-shopping-basket"></i> Tu pedido actual</h3>
+                <div id="cartItemsList"></div>
+                <div class="total-price" id="cartTotal">Total: $0.00 USD</div>
+                <div class="flex-2cols">
+                    <button id="cambiarCuentaBtn" class="btn-outline" style="width:auto"><i class="fas fa-exchange-alt"></i> Cambiar cuenta / Cerrar sesión</button>
+                    <button id="vaciarCarritoBtn" class="btn-outline" style="width:auto"><i class="fas fa-trash-alt"></i> Vaciar carrito</button>
+                </div>
+                <hr>
+                <h4>Proceso de pago</h4>
+                <div id="paymentSection">
+                    <div class="form-group">
+                        <label>Método de pago:</label>
+                        <select id="metodoPago">
+                            <option value="tarjeta">Tarjeta de crédito/débito</option>
+                            <option value="efectivo">Efectivo (contra entrega)</option>
+                            <option value="transferencia">Transferencia bancaria</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de tarjeta / referencia (demo):</label>
+                        <input type="text" placeholder="**** **** **** 1234" id="cardRef">
+                    </div>
+                    <button id="confirmarPagoBtn" class="btn-pago"><i class="fas fa-check-circle"></i> Confirmar pago y realizar pedido</button>
+                    <p class="warning" id="paymentMsg"></p>
+                </div>
+            </div>
+        </div>
+        <!-- DATOS PERSONALES, CORREO ELECTRONICO, CUENTA -->
+        <div id="datosPane" class="tab-pane">
+            <div class="user-data-card">
+                <h3><i class="fas fa-id-card"></i> Mis datos personales / Cuenta</h3>
+                <div id="datosUsuarioInfo">
+                    <!-- contenido dinámico según login -->
+                </div>
+                <hr>
+                <h4>Actualizar información</h4>
+                <div class="flex-2cols">
+                    <div class="form-group"><input type="text" id="editNombre" placeholder="Nombre completo"></div>
+                    <div class="form-group"><input type="email" id="editEmail" placeholder="Correo electrónico"></div>
+                </div>
+                <div class="form-group"><input type="text" id="editDireccion" placeholder="Dirección de entrega"></div>
+                <button id="actualizarDatosBtn" class="btn-primary"><i class="fas fa-save"></i> Actualizar datos</button>
+            </div>
+        </div>
+        <!-- DATOS EMPRESA -->
+        <div id="empresaPane" class="tab-pane">
+            <div class="company-card">
+                <i class="fas fa-store" style="font-size: 2rem; color:#c92f2f;"></i>
+                <h3>Las Delicias - Datos de la empresa</h3>
+                <p><strong>Razón Social:</strong> Delicias Gourmet S.A.</p>
+                <p><strong>RUC:</strong> 123456789-0</p>
+                <p><strong>Dirección:</strong> Av. Sabores #123, Ciudad Gastronómica</p>
+                <p><strong>Teléfono:</strong> +1 800 123 DELI</p>
+                <p><strong>Email corporativo:</strong> contacto@lasdelicias.com</p>
+                <p><strong>Horario:</strong> Lun-Dom 11am a 10pm</p>
+            </div>
+        </div>
+        <!-- SERVICIO AL CLIENTE -->
+        <div id="servicioPane" class="tab-pane">
+            <div class="service-card">
+                <i class="fas fa-life-ring" style="font-size: 2rem;"></i>
+                <h3>Servicio al Cliente</h3>
+                <p>📞 Línea WhatsApp: +1 999 888 7777</p>
+                <p>📧 soporte@lasdelicias.com</p>
+                <p>⏱️ Atención en línea: 9am - 9pm (todos los días)</p>
+                <p>💬 Chat disponible: <button class="btn-outline" style="padding:4px 12px;" onclick="alert('Funcionalidad demo: Chat activo.')"><i class="fas fa-comment-dots"></i> Abrir chat</button></p>
+            </div>
+        </div>
+        <!-- POLITICAS -->
+        <div id="politicasPane" class="tab-pane">
+            <div class="policies-card">
+                <h3><i class="fas fa-file-alt"></i> Políticas de Reserva y Pedido</h3>
+                <ul style="margin-left: 1.5rem;">
+                    <li>✔️ Cancelación gratuita hasta 30 min antes.</li>
+                    <li>✔️ Tiempo de entrega estimado: 35-50 min.</li>
+                    <li>✔️ Promociones aplican solo por pedidos mayores a $15 USD.</li>
+                    <li>✔️ Política de datos: tus datos están protegidos según ley.</li>
+                    <li>✔️ Reembolso total si el pedido presenta algún inconveniente.</li>
+                </ul>
+                <p><strong>Métodos de pago aceptados:</strong> Tarjeta, efectivo, transferencia.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
